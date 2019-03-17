@@ -23,7 +23,9 @@ app.get('/',(req,res)=>{
     })
     .catch(e=>console.log(e.message))
 })
-
+app.get('/add',(req,res)=>{
+    res.render('add')
+})
 
 
 app.listen(3000,()=>console.log('Server start on port 3000'))
