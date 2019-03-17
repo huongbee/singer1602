@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     }
 })
 const fileFilter = (req, file, cb)=>{
-    if(file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg')
+    if(file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg')
         return cb(new Error('File not allow'))
     cb(null, true)
 }
@@ -48,10 +48,16 @@ app.post('/add',(req,res)=>{
         if(err){
             return res.send(err.message)
         }
-        res.send({
-            file: req.file,
-            data : req.body
+        const { name, link } = req.body
+        Singer.create({
+            name: name ,
+            link: link,
+            avatar: req.file.filename
         })
+        .then(()=>{
+            res.redirect('/')
+        })
+        .catch(e=>console.log(e.message))
     })
 })
 

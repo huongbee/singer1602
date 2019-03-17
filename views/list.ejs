@@ -28,16 +28,16 @@
                 </thead>
                 <tbody>
                     <%
-                    singers.forEach(singer=>{
+                    singers.forEach((singer,index)=>{
                     %>
                     <tr>
-                        <td><%=singer._id%></td>
+                        <td><%=index+1%></td>
                         <td><%=singer.name%></td>
                         <td>
-                            <img src="">
+                            <img src="images/<%=singer.avatar%>" width="100px">
                         </td>
                         <td>
-                            <a href="" target="_blank"><%=singer.name%></a>
+                            <a href="<%=singer.link%>" target="_blank"><%=singer.name%></a>
                         </td>
                         <td>
                             <button style="width:100%" class="btn btn-warning">
