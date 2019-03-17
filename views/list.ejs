@@ -17,6 +17,7 @@
             </div>
         </div>
         <div class="row">
+            <% if(singers.length > 0){%>
             <table class="table">
                 <thead>
                     <th>STT</th>
@@ -53,6 +54,12 @@
                     %>
                 </tbody>
             </table>
+            <% }
+            else{%>
+            <div class="col-12">
+                <div class="text-danger">Singer not found!</div>
+            </div>
+            <%}%>
         </div>
     </div>
 </body>
