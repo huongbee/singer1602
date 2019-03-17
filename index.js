@@ -1,6 +1,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const multer = require('multer')
+const flash = require('connect-flash')
+const session = require('express-session')
 const SingerSchema = require('./models/Singer')
 
 const storage = multer.diskStorage({
@@ -16,13 +18,23 @@ const fileFilter = (req, file, cb)=>{
         return cb(new Error('File not allow'))
     cb(null, true)
 }
-
 const upload = multer({storage,fileFilter, limits:{fileSize:102400}}) // 100kb
 
 const app = express()
 app.set('view engine','ejs')
 app.use(express.static('public'))
 
+
+app.use(session({
+    secret: '7654323gfdssd',
+    resave: true,
+    saveUninitialized: true,
+}))
+app.use(flash())
+app.use((req,res,next)=>{
+    res.locals.error_message = req.flash('error_message')
+    next();
+})
 mongoose.connect('mongodb://localhost:27017/singer1602',{
     useNewUrlParser:true,
     useCreateIndex:true,
@@ -65,12 +77,15 @@ app.get('/remove/:id',(req,res)=>{
     Singer.findByIdAndDelete(_id)
     .then((singer)=>{
         if(!singer){
-            
-            console.log('Not found')
+            req.flash('error_message', 'Singer Not found!')
+            res.redirect('/')
         }
         else console.log(singer)
     })
-    .catch(err=>console.log(err.message))
+    .catch(err=>{
+        req.flash('error_message', err.message)
+        res.redirect('/')
+    })
 })
 
 
