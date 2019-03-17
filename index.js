@@ -52,13 +52,25 @@ app.post('/add',(req,res)=>{
         Singer.create({
             name: name ,
             link: link,
-            avatar: req.file.filename
+            avatar: req.file ? req.file.filename : 'user-avatar.png'
         })
         .then(()=>{
             res.redirect('/')
         })
         .catch(e=>console.log(e.message))
     })
+})
+app.get('/remove/:id',(req,res)=>{
+    const _id = req.params.id
+    Singer.findByIdAndDelete(_id)
+    .then((singer)=>{
+        if(!singer){
+            
+            console.log('Not found')
+        }
+        else console.log(singer)
+    })
+    .catch(err=>console.log(err.message))
 })
 
 
