@@ -33,6 +33,7 @@ app.use(session({
 app.use(flash())
 app.use((req,res,next)=>{
     res.locals.error_message = req.flash('error_message')
+    res.locals.success_message = req.flash('success_message')
     next();
 })
 mongoose.connect('mongodb://localhost:27017/singer1602',{
@@ -80,7 +81,10 @@ app.get('/remove/:id',(req,res)=>{
             req.flash('error_message', 'Singer Not found!')
             res.redirect('/')
         }
-        else console.log(singer)
+        else {
+            req.flash('success_message', 'Deleted!')
+            res.redirect('/')
+        }
     })
     .catch(err=>{
         req.flash('error_message', err.message)
