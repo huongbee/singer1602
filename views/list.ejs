@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>List Singer</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>List Singer</h2>
+                <a class="btn btn-primary" href="/add">Add new Singer</a>
+                <br><br>
+            </div>
+        </div>
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <th>STT</th>
+                    <th>Name</th>
+                    <th>Avatar</th>
+                    <th>Link</th>
+                    <th>Options</th>
+                </thead>
+                <tbody>
+                    <%
+                    singers.forEach(singer=>{
+                    %>
+                    <tr>
+                        <td><%=singer._id%></td>
+                        <td><%=singer.name%></td>
+                        <td>
+                            <img src="">
+                        </td>
+                        <td>
+                            <a href="" target="_blank"><%=singer.name%></a>
+                        </td>
+                        <td>
+                            <button style="width:100%" class="btn btn-warning">
+                            <a href="/update/<%=singer._id%>">Update</a>
+                            </button>
+                            <br><br>
+                            <button style="width:100%" class="btn btn-danger">
+                            <a href="/remove/<%=singer._id%>">Delete</a>
+                            </button>
+                        </td>
+                    </tr>
+                    <% 
+                    })
+                    %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
