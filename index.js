@@ -11,7 +11,13 @@ const storage = multer.diskStorage({
         cb(null,Date.now()+'-'+file.originalname)
     }
 })
-const upload = multer({storage})
+const fileFilter = (req, file, cb)=>{
+    if(file.mimetype !== 'image/png' && file.mimetype !== 'image/jpg')
+        return cb(new Error('File not allow'))
+    cb(null, true)
+}
+
+const upload = multer({storage,fileFilter, limits:{fileSize:102400}}) // 100kb
 
 const app = express()
 app.set('view engine','ejs')
@@ -40,7 +46,7 @@ app.get('/add',(req,res)=>{
 app.post('/add',(req,res)=>{
     upload.single('avatar')(req,res,err=>{
         if(err){
-            return console.log(err)
+            return res.send(err.message)
         }
         res.send({
             file: req.file,
